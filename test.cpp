@@ -10,7 +10,6 @@ void afficher_entete_test() {
 	printf("/***************************************************************************************\n");
 	printf("* DECODEUR ARINC-429 :: Mode Test\n*\n");
 	printf("* Auteur  : Christian Jeune\n");
-	printf("* Session : Hiver 2023\n*\n");
 	printf("/***************************************************************************************\n");
 
 }	
