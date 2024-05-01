@@ -2,7 +2,7 @@
 
 ## Overview
 
-The ARINC 429 Decoder is a program designed to decode airplane information. The data is encoded using BCD and BNR. This project aims to decode the transmitted data and extract relevant information for analysis and monitoring purposes.
+The ARINC 429 Decoder is a program designed to decode airplane information (French) . The data is encoded using BCD and BNR. This project aims to decode the transmitted data and extract relevant information for analysis and monitoring purposes.
 
 This project is written in C++.
 
@@ -11,6 +11,10 @@ This project is written in C++.
 - Decodes ARINC 429 data encoded in BCD and BNR formats.
 - Provides detailed decoding of various airplane parameters.
 - Designed for analysis and monitoring of airplane data.
+
+## Demo
+
+https://github.com/chris-jeune/Decoder-ARINCA-429/assets/145855247/9653d571-8a7c-4cf4-9428-e2af4576afbc
 
 ## Usage
 
