@@ -13,21 +13,14 @@ http://gafferongames.com/networking-for-game-programmers/sending-and-receiving-p
 *****************************************************************************************/
 #include <stdlib.h>
 #include <stdio.h>
+#define _WINSOCK_DEPRECATED_NO_WARNINGS 
 
-#ifdef _WIN32
+
 #include <winsock2.h>
-#else
-#include <unistd.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#endif
-#ifdef __MINGW32__
-#include <ws2tcpip.h>
-#endif
+typedef int socklen_t;
 
 #include "port_udp.h"
-#include "../configuration.h"
+#include "configuration.h"
 
 /****************************************************************************************
 *                           DÉFINTION DES TYPES ET CONSTANTES                           *
@@ -36,7 +29,7 @@ http://gafferongames.com/networking-for-game-programmers/sending-and-receiving-p
 #define LOCAL_HOST "127.0.0.1"
 
 #if defined(MODE_DEBUG) || defined(MODE_TEST)
-#define UDP_LOG(format, ...)   printf(format, ##__VA_ARGS__)
+#define UDP_LOG(format, ...)    std::cout << format << std::endl
 #else
 #define UDP_LOG(format, ...)
 #endif
@@ -50,12 +43,12 @@ int initialiser_port_udp(int numero_port)
     int id_socket;
     struct sockaddr_in addresse_ip;
 
-#ifdef _WIN32
+
     WSADATA WsaData;
     unsigned long operation_non_blocante;
 
     WSAStartup(MAKEWORD(2,2), &WsaData);
-#endif
+
 
     id_socket = socket(AF_INET, SOCK_DGRAM, 0);
     if (id_socket == -1)
@@ -74,40 +67,30 @@ int initialiser_port_udp(int numero_port)
         exit(EXIT_FAILURE);
     }
 
-#ifdef _WIN32
+
     operation_non_blocante = 1;
     if (ioctlsocket(id_socket, FIONBIO, &operation_non_blocante) != 0)
     {
         UDP_LOG("ERREUR: le port [%i] ne peut être placé en mode non-bloquant\n", numero_port);
         exit(EXIT_FAILURE);
     }
-#endif
+
 
     return id_socket;
 }
 
-void detruire_port_udp(int id_port_udp)
-{
-#ifdef _WIN32
-    closesocket(id_port_udp);
-    WSACleanup();
-#else
-    close(id_port_udp);
-#endif
-}
-
-int recevoir_port_udp(int id_port_udp, void* donnees, int taille_donnees)
+int recevoir_port_udp(int id_port_udp, unsigned int* donnees, int taille_donnees)
 {
     int nb_octets_recus;
     struct sockaddr_in sender_address;
     socklen_t sender_size = sizeof(sender_address);
 
-    nb_octets_recus = recvfrom(id_port_udp, donnees, taille_donnees, 0, (struct sockaddr*) &sender_address, &sender_size);
+    nb_octets_recus = recvfrom(id_port_udp, (char*)donnees, taille_donnees, 0, (struct sockaddr*) &sender_address, &sender_size);
 
     return nb_octets_recus;
 }
 
-int transmettre_port_udp(int id_port_udp_transmetteur, int numero_port_recepteur, void* donnees, int taille_donnees)
+int transmettre_port_udp(int id_port_udp_transmetteur, int numero_port_recepteur, unsigned int* donnees, int taille_donnees)
 {
     int nb_octets_transmis;
     struct sockaddr_in addresse_ip;
@@ -116,7 +99,7 @@ int transmettre_port_udp(int id_port_udp_transmetteur, int numero_port_recepteur
     addresse_ip.sin_addr.s_addr = inet_addr(LOCAL_HOST);
     addresse_ip.sin_port = htons(numero_port_recepteur);
 
-    nb_octets_transmis = sendto(id_port_udp_transmetteur, donnees, taille_donnees, 0, (struct sockaddr*) &addresse_ip, sizeof(addresse_ip));
+    nb_octets_transmis = sendto(id_port_udp_transmetteur, (char*)donnees, taille_donnees, 0, (struct sockaddr*) &addresse_ip, sizeof(addresse_ip));
 
     return nb_octets_transmis;
 }

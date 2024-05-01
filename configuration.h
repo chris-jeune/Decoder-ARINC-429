@@ -3,8 +3,8 @@
 
 
 // Requis 1 : Modes d'opération
-#define TEST
-//#define APPLICATION
+//#define TEST
+#define APPLICATION
 
 // Requis 2 : Port UDP pour les données ARINC-429
 #define UDP_PORT_NUMBER 55001

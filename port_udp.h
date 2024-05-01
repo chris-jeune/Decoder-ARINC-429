@@ -54,31 +54,6 @@ Liste des fonctions publiques:
 int initialiser_port_udp(int numero_port);
 
 
-
-/*
-    DETRUIRE_PORT_UDP
-
-    Cette fonction libère un port UDP une fois sa vie utile terminée.
-    Tout les ports créer à l'aide de initialiser_port_udp doivent libérer à l'aide
-    de detruire_port_udp.
-    
-    Paramètres:
-        - id_port_udp : L'identifiant du port UDP à détruire..
-
-    Retour: 
-        - Aucun.
-
-    Example d'appel:
-        int id_port_udp;
-        id_port_udp = initialiser_port_udp(55001);
-            ... code ...
-        detruire_port_udp(id_port_udp);
-
-*/
-void detruire_port_udp(int id_port_udp);
-
-
-
 /*
     RECEVOIR_PORT_UDP
 
@@ -100,7 +75,7 @@ void detruire_port_udp(int id_port_udp);
         id_port_udp = initialiser_port_udp(55001);
         recevoir_port_udp(id_port_udp, &valeur_recue, sizeof(unsigned int));
 */
-int recevoir_port_udp(int id_port_udp, void* donnees, int taille_donnees);
+int recevoir_port_udp(int id_port_udp, unsigned int * donnees, int taille_donnees);
 
 
 
@@ -126,7 +101,7 @@ int recevoir_port_udp(int id_port_udp, void* donnees, int taille_donnees);
         recevoir_port_udp(id_port_udp, 55001, &valeur_transmise, sizeof(unsigned int));
 */
 int transmettre_port_udp(int id_port_udp_transmetteur, int numero_port_recepteur, 
-                         void* donnees, int taille_donnees);
+                         unsigned int * donnees, int taille_donnees);
 
 
 #endif

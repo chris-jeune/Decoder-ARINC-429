@@ -1,0 +1,4 @@
+﻿  a429.cpp
+C:\Users\CJ\OneDrive - Concordia University - Canada\Fall 2023\COEN 243\Decoder-ARINCA-429\a429.cpp(43,24): warning C4552: '*' : résultat de l'expression non utilisé
+C:\Users\CJ\OneDrive - Concordia University - Canada\Fall 2023\COEN 243\Decoder-ARINCA-429\a429.cpp(74,24): warning C4244: 'argument' : conversion de 'double' en 'unsigned int', perte possible de données
+  Decoder-ARINCA-429.vcxproj -> C:\Users\CJ\OneDrive - Concordia University - Canada\Fall 2023\COEN 243\Decoder-ARINCA-429\Debug\Decoder_arinc429.exe
